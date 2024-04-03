@@ -1,10 +1,10 @@
-#[cfg(feature = "use_std")]
+
 use std::error::Error;
 use std::fmt::{Debug, Display, Formatter, Result as FmtResult};
 
 use std::iter::ExactSizeIterator;
 
-use either::Either;
+use crate::either::Either;
 
 use crate::size_hint;
 
@@ -116,7 +116,7 @@ where
     }
 }
 
-#[cfg(feature = "use_std")]
+
 impl<I> Error for ExactlyOneError<I>
 where
     I: Iterator + Debug,

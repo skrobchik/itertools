@@ -1,6 +1,5 @@
 #![warn(missing_docs)]
 #![crate_name = "itertools"]
-#![cfg_attr(not(feature = "use_std"), no_std)]
 
 //! Extra iterator adaptors, functions and macros.
 //!
@@ -44,31 +43,18 @@
 //!
 //! This version of itertools requires Rust 1.43.1 or later.
 
-#[cfg(not(feature = "use_std"))]
-extern crate core as std;
-
-#[cfg(feature = "use_alloc")]
-extern crate alloc;
-
-#[cfg(feature = "use_alloc")]
-use alloc::{string::String, vec::Vec};
-
+mod either;
 pub use either::Either;
 
 use core::borrow::Borrow;
 use std::cmp::Ordering;
-#[cfg(feature = "use_std")]
 use std::collections::HashMap;
-#[cfg(feature = "use_std")]
 use std::collections::HashSet;
 use std::fmt;
-#[cfg(feature = "use_alloc")]
 use std::fmt::Write;
-#[cfg(feature = "use_std")]
 use std::hash::Hash;
 use std::iter::{once, IntoIterator};
-#[cfg(feature = "use_alloc")]
-type VecIntoIter<T> = alloc::vec::IntoIter<T>;
+type VecIntoIter<T> = std::vec::IntoIter<T>;
 use std::iter::FromIterator;
 
 #[macro_use]
@@ -80,7 +66,6 @@ pub use std::iter as __std_iter;
 
 /// The concrete iterator types.
 pub mod structs {
-    #[cfg(feature = "use_alloc")]
     pub use crate::adaptors::MultiProduct;
     pub use crate::adaptors::{
         Batching, Coalesce, Dedup, DedupBy, DedupByWithCount, DedupWithCount, FilterMapOk,
@@ -89,47 +74,45 @@ pub mod structs {
     };
     #[allow(deprecated)]
     pub use crate::adaptors::{MapResults, Step};
-    #[cfg(feature = "use_alloc")]
     pub use crate::combinations::Combinations;
-    #[cfg(feature = "use_alloc")]
     pub use crate::combinations_with_replacement::CombinationsWithReplacement;
     pub use crate::cons_tuples_impl::ConsTuples;
-    #[cfg(feature = "use_std")]
+    
     pub use crate::duplicates_impl::{Duplicates, DuplicatesBy};
     pub use crate::exactly_one_err::ExactlyOneError;
     pub use crate::flatten_ok::FlattenOk;
     pub use crate::format::{Format, FormatWith};
-    #[cfg(feature = "use_alloc")]
+    
     pub use crate::groupbylazy::{Chunk, Chunks, Group, GroupBy, Groups, IntoChunks};
-    #[cfg(feature = "use_std")]
+    
     pub use crate::grouping_map::{GroupingMap, GroupingMapBy};
     pub use crate::intersperse::{Intersperse, IntersperseWith};
-    #[cfg(feature = "use_alloc")]
+    
     pub use crate::kmerge_impl::{KMerge, KMergeBy};
     pub use crate::merge_join::{Merge, MergeBy, MergeJoinBy};
-    #[cfg(feature = "use_alloc")]
+    
     pub use crate::multipeek_impl::MultiPeek;
     pub use crate::pad_tail::PadUsing;
-    #[cfg(feature = "use_alloc")]
+    
     pub use crate::peek_nth::PeekNth;
     pub use crate::peeking_take_while::PeekingTakeWhile;
-    #[cfg(feature = "use_alloc")]
+    
     pub use crate::permutations::Permutations;
-    #[cfg(feature = "use_alloc")]
+    
     pub use crate::powerset::Powerset;
     pub use crate::process_results_impl::ProcessResults;
-    #[cfg(feature = "use_alloc")]
+    
     pub use crate::put_back_n_impl::PutBackN;
-    #[cfg(feature = "use_alloc")]
+    
     pub use crate::rciter_impl::RcIter;
     pub use crate::repeatn::RepeatN;
     #[allow(deprecated)]
     pub use crate::sources::{Iterate, RepeatCall, Unfold};
     pub use crate::take_while_inclusive::TakeWhileInclusive;
-    #[cfg(feature = "use_alloc")]
+    
     pub use crate::tee::Tee;
     pub use crate::tuple_impl::{CircularTupleWindows, TupleBuffer, TupleWindows, Tuples};
-    #[cfg(feature = "use_std")]
+    
     pub use crate::unique_impl::{Unique, UniqueBy};
     pub use crate::with_position::WithPosition;
     pub use crate::zip_eq_impl::ZipEq;
@@ -146,7 +129,7 @@ pub use crate::concat_impl::concat;
 pub use crate::cons_tuples_impl::cons_tuples;
 pub use crate::diff::diff_with;
 pub use crate::diff::Diff;
-#[cfg(feature = "use_alloc")]
+
 pub use crate::kmerge_impl::kmerge_by;
 pub use crate::minmax::MinMaxResult;
 pub use crate::peeking_take_while::PeekingNext;
@@ -166,58 +149,58 @@ pub use crate::either_or_both::EitherOrBoth;
 pub mod free;
 #[doc(inline)]
 pub use crate::free::*;
-#[cfg(feature = "use_alloc")]
+
 mod combinations;
-#[cfg(feature = "use_alloc")]
+
 mod combinations_with_replacement;
 mod concat_impl;
 mod cons_tuples_impl;
 mod diff;
-#[cfg(feature = "use_std")]
+
 mod duplicates_impl;
 mod exactly_one_err;
-#[cfg(feature = "use_alloc")]
+
 mod extrema_set;
 mod flatten_ok;
 mod format;
-#[cfg(feature = "use_alloc")]
+
 mod group_map;
-#[cfg(feature = "use_alloc")]
+
 mod groupbylazy;
-#[cfg(feature = "use_std")]
+
 mod grouping_map;
 mod intersperse;
-#[cfg(feature = "use_alloc")]
+
 mod k_smallest;
-#[cfg(feature = "use_alloc")]
+
 mod kmerge_impl;
-#[cfg(feature = "use_alloc")]
+
 mod lazy_buffer;
 mod merge_join;
 mod minmax;
-#[cfg(feature = "use_alloc")]
+
 mod multipeek_impl;
 mod pad_tail;
-#[cfg(feature = "use_alloc")]
+
 mod peek_nth;
 mod peeking_take_while;
-#[cfg(feature = "use_alloc")]
+
 mod permutations;
-#[cfg(feature = "use_alloc")]
+
 mod powerset;
 mod process_results_impl;
-#[cfg(feature = "use_alloc")]
+
 mod put_back_n_impl;
-#[cfg(feature = "use_alloc")]
+
 mod rciter_impl;
 mod repeatn;
 mod size_hint;
 mod sources;
 mod take_while_inclusive;
-#[cfg(feature = "use_alloc")]
+
 mod tee;
 mod tuple_impl;
-#[cfg(feature = "use_std")]
+
 mod unique_impl;
 mod unziptuple;
 mod with_position;
@@ -605,7 +588,7 @@ pub trait Itertools: Iterator {
     /// }
     /// assert_eq!(data_grouped, vec![(true, vec![1, 3]), (false, vec![-2, -2]), (true, vec![1, 0, 1, 2])]);
     /// ```
-    #[cfg(feature = "use_alloc")]
+    
     fn group_by<K, F>(self, key: F) -> GroupBy<K, Self, F>
     where
         Self: Sized,
@@ -642,7 +625,7 @@ pub trait Itertools: Iterator {
     ///     assert_eq!(4, chunk.sum());
     /// }
     /// ```
-    #[cfg(feature = "use_alloc")]
+    
     fn chunks(self, size: usize) -> IntoChunks<Self>
     where
         Self: Sized,
@@ -784,7 +767,7 @@ pub trait Itertools: Iterator {
     /// itertools::assert_equal(t2, 0..4);
     /// itertools::assert_equal(t1, 1..4);
     /// ```
-    #[cfg(feature = "use_alloc")]
+    
     fn tee(self) -> (Tee<Self>, Tee<Self>)
     where
         Self: Sized,
@@ -1094,7 +1077,7 @@ pub trait Itertools: Iterator {
     /// let it = vec![a, b, c].into_iter().kmerge();
     /// itertools::assert_equal(it, vec![0, 1, 2, 3, 4, 5]);
     /// ```
-    #[cfg(feature = "use_alloc")]
+    
     fn kmerge(self) -> KMerge<<Self::Item as IntoIterator>::IntoIter>
     where
         Self: Sized,
@@ -1124,7 +1107,7 @@ pub trait Itertools: Iterator {
     /// assert_eq!(it.next(), Some(0.));
     /// assert_eq!(it.last(), Some(-7.));
     /// ```
-    #[cfg(feature = "use_alloc")]
+    
     fn kmerge_by<F>(self, first: F) -> KMergeBy<<Self::Item as IntoIterator>::IntoIter, F>
     where
         Self: Sized,
@@ -1180,7 +1163,7 @@ pub trait Itertools: Iterator {
     /// assert_eq!(multi_prod.next(), Some(vec![1, 3, 5]));
     /// assert_eq!(multi_prod.next(), None);
     /// ```
-    #[cfg(feature = "use_alloc")]
+    
     fn multi_cartesian_product(self) -> MultiProduct<<Self::Item as IntoIterator>::IntoIter>
     where
         Self: Sized,
@@ -1332,7 +1315,7 @@ pub trait Itertools: Iterator {
     /// itertools::assert_equal(data.into_iter().duplicates(),
     ///                         vec![20, 10]);
     /// ```
-    #[cfg(feature = "use_std")]
+    
     fn duplicates(self) -> Duplicates<Self>
     where
         Self: Sized,
@@ -1358,7 +1341,7 @@ pub trait Itertools: Iterator {
     /// itertools::assert_equal(data.into_iter().duplicates_by(|s| s.len()),
     ///                         vec!["aa", "c"]);
     /// ```
-    #[cfg(feature = "use_std")]
+    
     fn duplicates_by<V, F>(self, f: F) -> DuplicatesBy<Self, V, F>
     where
         Self: Sized,
@@ -1386,7 +1369,7 @@ pub trait Itertools: Iterator {
     /// itertools::assert_equal(data.into_iter().unique(),
     ///                         vec![10, 20, 30, 40, 50]);
     /// ```
-    #[cfg(feature = "use_std")]
+    
     fn unique(self) -> Unique<Self>
     where
         Self: Sized,
@@ -1413,7 +1396,7 @@ pub trait Itertools: Iterator {
     /// itertools::assert_equal(data.into_iter().unique_by(|s| s.len()),
     ///                         vec!["a", "bb", "ccc"]);
     /// ```
-    #[cfg(feature = "use_std")]
+    
     fn unique_by<V, F>(self, f: F) -> UniqueBy<Self, V, F>
     where
         Self: Sized,
@@ -1639,7 +1622,7 @@ pub trait Itertools: Iterator {
     ///
     /// If the adapted iterator is deterministic,
     /// this iterator adapter yields items in a reliable order.
-    #[cfg(feature = "use_alloc")]
+    
     fn combinations(self, k: usize) -> Combinations<Self>
     where
         Self: Sized,
@@ -1667,7 +1650,7 @@ pub trait Itertools: Iterator {
     ///     vec![3, 3],
     /// ]);
     /// ```
-    #[cfg(feature = "use_alloc")]
+    
     fn combinations_with_replacement(self, k: usize) -> CombinationsWithReplacement<Self>
     where
         Self: Sized,
@@ -1716,7 +1699,7 @@ pub trait Itertools: Iterator {
     ///
     /// Note: The source iterator is collected lazily, and will not be
     /// re-iterated if the permutations adaptor is completed and re-iterated.
-    #[cfg(feature = "use_alloc")]
+    
     fn permutations(self, k: usize) -> Permutations<Self>
     where
         Self: Sized,
@@ -1753,7 +1736,7 @@ pub trait Itertools: Iterator {
     ///     vec![1, 2, 3],
     /// ]);
     /// ```
-    #[cfg(feature = "use_alloc")]
+    
     fn powerset(self) -> Powerset<Self>
     where
         Self: Sized,
@@ -2082,7 +2065,7 @@ pub trait Itertools: Iterator {
     /// let data : Option<usize> = None;
     /// assert!(data.into_iter().all_unique());
     /// ```
-    #[cfg(feature = "use_std")]
+    
     fn all_unique(&mut self) -> bool
     where
         Self: Sized,
@@ -2192,7 +2175,7 @@ pub trait Itertools: Iterator {
 
     /// `.collect_vec()` is simply a type specialization of [`Iterator::collect`],
     /// for convenience.
-    #[cfg(feature = "use_alloc")]
+    
     fn collect_vec(self) -> Vec<Self::Item>
     where
         Self: Sized,
@@ -2270,7 +2253,7 @@ pub trait Itertools: Iterator {
     /// assert_eq!(["a", "b", "c"].iter().join(", "), "a, b, c");
     /// assert_eq!([1, 2, 3].iter().join(", "), "1, 2, 3");
     /// ```
-    #[cfg(feature = "use_alloc")]
+    
     fn join(&mut self, sep: &str) -> String
     where
         Self::Item: std::fmt::Display,
@@ -2734,7 +2717,7 @@ pub trait Itertools: Iterator {
     /// itertools::assert_equal(text.chars().sorted_unstable(),
     ///                         "abcdef".chars());
     /// ```
-    #[cfg(feature = "use_alloc")]
+    
     fn sorted_unstable(self) -> VecIntoIter<Self::Item>
     where
         Self: Sized,
@@ -2772,7 +2755,7 @@ pub trait Itertools: Iterator {
     /// itertools::assert_equal(oldest_people_first,
     ///                         vec!["Jill", "Jack", "Jane", "John"]);
     /// ```
-    #[cfg(feature = "use_alloc")]
+    
     fn sorted_unstable_by<F>(self, cmp: F) -> VecIntoIter<Self::Item>
     where
         Self: Sized,
@@ -2808,7 +2791,7 @@ pub trait Itertools: Iterator {
     /// itertools::assert_equal(oldest_people_first,
     ///                         vec!["Jill", "Jack", "Jane", "John"]);
     /// ```
-    #[cfg(feature = "use_alloc")]
+    
     fn sorted_unstable_by_key<K, F>(self, f: F) -> VecIntoIter<Self::Item>
     where
         Self: Sized,
@@ -2839,7 +2822,7 @@ pub trait Itertools: Iterator {
     /// itertools::assert_equal(text.chars().sorted(),
     ///                         "abcdef".chars());
     /// ```
-    #[cfg(feature = "use_alloc")]
+    
     fn sorted(self) -> VecIntoIter<Self::Item>
     where
         Self: Sized,
@@ -2877,7 +2860,7 @@ pub trait Itertools: Iterator {
     /// itertools::assert_equal(oldest_people_first,
     ///                         vec!["Jill", "Jack", "Jane", "John"]);
     /// ```
-    #[cfg(feature = "use_alloc")]
+    
     fn sorted_by<F>(self, cmp: F) -> VecIntoIter<Self::Item>
     where
         Self: Sized,
@@ -2913,7 +2896,7 @@ pub trait Itertools: Iterator {
     /// itertools::assert_equal(oldest_people_first,
     ///                         vec!["Jill", "Jack", "Jane", "John"]);
     /// ```
-    #[cfg(feature = "use_alloc")]
+    
     fn sorted_by_key<K, F>(self, f: F) -> VecIntoIter<Self::Item>
     where
         Self: Sized,
@@ -2951,7 +2934,7 @@ pub trait Itertools: Iterator {
     /// itertools::assert_equal(oldest_people_first,
     ///                         vec!["Jill", "Jack", "Jane", "John"]);
     /// ```
-    #[cfg(feature = "use_alloc")]
+    
     fn sorted_by_cached_key<K, F>(self, f: F) -> VecIntoIter<Self::Item>
     where
         Self: Sized,
@@ -2990,7 +2973,7 @@ pub trait Itertools: Iterator {
     ///
     /// itertools::assert_equal(five_smallest, 0..5);
     /// ```
-    #[cfg(feature = "use_alloc")]
+    
     fn k_smallest(self, k: usize) -> VecIntoIter<Self::Item>
     where
         Self: Sized,
@@ -3083,7 +3066,7 @@ pub trait Itertools: Iterator {
     /// assert_eq!(lookup[&2], vec![12, 42]);
     /// assert_eq!(lookup[&3], vec![13, 33]);
     /// ```
-    #[cfg(feature = "use_std")]
+    
     fn into_group_map<K, V>(self) -> HashMap<K, Vec<V>>
     where
         Self: Iterator<Item = (K, V)> + Sized,
@@ -3119,7 +3102,7 @@ pub trait Itertools: Iterator {
     ///     30,
     /// );
     /// ```
-    #[cfg(feature = "use_std")]
+    
     fn into_group_map_by<K, V, F>(self, f: F) -> HashMap<K, Vec<V>>
     where
         Self: Iterator<Item = V> + Sized,
@@ -3138,7 +3121,7 @@ pub trait Itertools: Iterator {
     ///
     /// See [`GroupingMap`] for more informations
     /// on what operations are available.
-    #[cfg(feature = "use_std")]
+    
     fn into_grouping_map<K, V>(self) -> GroupingMap<Self>
     where
         Self: Iterator<Item = (K, V)> + Sized,
@@ -3155,7 +3138,7 @@ pub trait Itertools: Iterator {
     ///
     /// See [`GroupingMap`] for more informations
     /// on what operations are available.
-    #[cfg(feature = "use_std")]
+    
     fn into_grouping_map_by<K, V, F>(self, key_mapper: F) -> GroupingMapBy<Self, F>
     where
         Self: Iterator<Item = V> + Sized,
@@ -3187,7 +3170,7 @@ pub trait Itertools: Iterator {
     ///
     /// The elements can be floats but no particular result is guaranteed
     /// if an element is NaN.
-    #[cfg(feature = "use_alloc")]
+    
     fn min_set(self) -> Vec<Self::Item>
     where
         Self: Sized,
@@ -3220,7 +3203,7 @@ pub trait Itertools: Iterator {
     ///
     /// The elements can be floats but no particular result is guaranteed
     /// if an element is NaN.
-    #[cfg(feature = "use_alloc")]
+    
     fn min_set_by<F>(self, mut compare: F) -> Vec<Self::Item>
     where
         Self: Sized,
@@ -3252,7 +3235,7 @@ pub trait Itertools: Iterator {
     ///
     /// The elements can be floats but no particular result is guaranteed
     /// if an element is NaN.
-    #[cfg(feature = "use_alloc")]
+    
     fn min_set_by_key<K, F>(self, key: F) -> Vec<Self::Item>
     where
         Self: Sized,
@@ -3284,7 +3267,7 @@ pub trait Itertools: Iterator {
     ///
     /// The elements can be floats but no particular result is guaranteed
     /// if an element is NaN.
-    #[cfg(feature = "use_alloc")]
+    
     fn max_set(self) -> Vec<Self::Item>
     where
         Self: Sized,
@@ -3317,7 +3300,7 @@ pub trait Itertools: Iterator {
     ///
     /// The elements can be floats but no particular result is guaranteed
     /// if an element is NaN.
-    #[cfg(feature = "use_alloc")]
+    
     fn max_set_by<F>(self, mut compare: F) -> Vec<Self::Item>
     where
         Self: Sized,
@@ -3349,7 +3332,7 @@ pub trait Itertools: Iterator {
     ///
     /// The elements can be floats but no particular result is guaranteed
     /// if an element is NaN.
-    #[cfg(feature = "use_alloc")]
+    
     fn max_set_by_key<K, F>(self, key: F) -> Vec<Self::Item>
     where
         Self: Sized,
@@ -3845,7 +3828,7 @@ pub trait Itertools: Iterator {
     /// assert_eq!(iter.next(), Some(0));
     /// assert_eq!(iter.peek(), Some(&1));
     /// ```
-    #[cfg(feature = "use_alloc")]
+    
     fn multipeek(self) -> MultiPeek<Self>
     where
         Self: Sized,
@@ -3866,7 +3849,7 @@ pub trait Itertools: Iterator {
     /// assert_eq!(counts[&5], 1);
     /// assert_eq!(counts.get(&0), None);
     /// ```
-    #[cfg(feature = "use_std")]
+    
     fn counts(self) -> HashMap<Self::Item, usize>
     where
         Self: Sized,
@@ -3909,7 +3892,7 @@ pub trait Itertools: Iterator {
     /// assert_eq!(first_name_frequency["James"], 4);
     /// assert_eq!(first_name_frequency.contains_key("Asha"), false);
     /// ```
-    #[cfg(feature = "use_std")]
+    
     fn counts_by<K, F>(self, f: F) -> HashMap<K, usize>
     where
         Self: Sized,

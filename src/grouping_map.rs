@@ -1,5 +1,3 @@
-#![cfg(feature = "use_std")]
-
 use crate::MinMaxResult;
 use std::cmp::Ordering;
 use std::collections::HashMap;

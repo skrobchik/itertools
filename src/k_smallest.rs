@@ -1,4 +1,4 @@
-use alloc::collections::BinaryHeap;
+use std::collections::BinaryHeap;
 use core::cmp::Ord;
 
 pub(crate) fn k_smallest<T: Ord, I: Iterator<Item = T>>(mut iter: I, k: usize) -> BinaryHeap<T> {

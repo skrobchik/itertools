@@ -1,6 +1,6 @@
 use crate::size_hint;
 use crate::PeekingNext;
-use alloc::collections::VecDeque;
+use std::collections::VecDeque;
 use std::iter::Fuse;
 
 /// See [`peek_nth()`] for more information.

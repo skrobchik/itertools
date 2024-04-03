@@ -1,5 +1,5 @@
-use alloc::boxed::Box;
-use alloc::vec::Vec;
+use std::boxed::Box;
+use std::vec::Vec;
 use std::fmt;
 use std::iter::FusedIterator;
 
@@ -47,7 +47,7 @@ where
     I: Iterator,
     I::Item: Clone,
 {
-    let indices = alloc::vec![0; k].into_boxed_slice();
+    let indices = std::vec![0; k].into_boxed_slice();
     let pool: LazyBuffer<I> = LazyBuffer::new(iter);
 
     CombinationsWithReplacement {

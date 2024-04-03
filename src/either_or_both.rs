@@ -2,7 +2,7 @@ use core::ops::{Deref, DerefMut};
 
 use crate::EitherOrBoth::*;
 
-use either::Either;
+use crate::either::Either;
 
 /// Value that either holds a single A or B, or both.
 #[derive(Clone, PartialEq, Eq, Hash, Debug)]

@@ -3,13 +3,11 @@ use std::fmt;
 use std::iter::{Fuse, FusedIterator};
 use std::marker::PhantomData;
 
-use either::Either;
+use crate::either::Either;
 
 use super::adaptors::{put_back, PutBack};
 use crate::either_or_both::EitherOrBoth;
 use crate::size_hint::{self, SizeHint};
-#[cfg(doc)]
-use crate::Itertools;
 
 #[derive(Clone, Debug)]
 pub struct MergeLte;

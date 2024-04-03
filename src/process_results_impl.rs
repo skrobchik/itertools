@@ -1,6 +1,3 @@
-#[cfg(doc)]
-use crate::Itertools;
-
 /// An iterator that produces only the `T` values as long as the
 /// inner iterator produces `Ok(T)`.
 ///

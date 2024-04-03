@@ -1,4 +1,4 @@
-use alloc::vec::{self, Vec};
+use std::vec::{self, Vec};
 use std::cell::{Cell, RefCell};
 
 /// A trait to unify `FnMut` for `GroupBy` with the chunk key in `IntoChunks`

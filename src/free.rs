@@ -3,29 +3,29 @@
 //! The benefit of free functions is that they accept any [`IntoIterator`] as
 //! argument, so the resulting code may be easier to read.
 
-#[cfg(feature = "use_alloc")]
+
 use std::fmt::Display;
 use std::iter::{self, Zip};
-#[cfg(feature = "use_alloc")]
-type VecIntoIter<T> = alloc::vec::IntoIter<T>;
 
-#[cfg(feature = "use_alloc")]
-use alloc::string::String;
+type VecIntoIter<T> = std::vec::IntoIter<T>;
+
+
+use std::string::String;
 
 use crate::intersperse::{Intersperse, IntersperseWith};
 use crate::Itertools;
 
 pub use crate::adaptors::{interleave, put_back};
-#[cfg(feature = "use_alloc")]
+
 pub use crate::kmerge_impl::kmerge;
 pub use crate::merge_join::{merge, merge_join_by};
-#[cfg(feature = "use_alloc")]
+
 pub use crate::multipeek_impl::multipeek;
-#[cfg(feature = "use_alloc")]
+
 pub use crate::peek_nth::peek_nth;
-#[cfg(feature = "use_alloc")]
+
 pub use crate::put_back_n_impl::put_back_n;
-#[cfg(feature = "use_alloc")]
+
 pub use crate::rciter_impl::rciter;
 pub use crate::zip_eq_impl::zip_eq;
 
@@ -268,7 +268,7 @@ where
 ///
 /// assert_eq!(join(&[1, 2, 3], ", "), "1, 2, 3");
 /// ```
-#[cfg(feature = "use_alloc")]
+
 pub fn join<I>(iterable: I, sep: &str) -> String
 where
     I: IntoIterator,
@@ -287,7 +287,7 @@ where
 ///
 /// assert_equal(sorted("rust".chars()), "rstu".chars());
 /// ```
-#[cfg(feature = "use_alloc")]
+
 pub fn sorted<I>(iterable: I) -> VecIntoIter<I::Item>
 where
     I: IntoIterator,
@@ -306,7 +306,7 @@ where
 ///
 /// assert_equal(sorted_unstable("rust".chars()), "rstu".chars());
 /// ```
-#[cfg(feature = "use_alloc")]
+
 pub fn sorted_unstable<I>(iterable: I) -> VecIntoIter<I::Item>
 where
     I: IntoIterator,

@@ -1,5 +1,5 @@
 use crate::PutBack;
-#[cfg(feature = "use_alloc")]
+
 use crate::PutBackN;
 use crate::RepeatN;
 use std::iter::Peekable;
@@ -71,7 +71,7 @@ where
     }
 }
 
-#[cfg(feature = "use_alloc")]
+
 impl<I> PeekingNext for PutBackN<I>
 where
     I: Iterator,
@@ -191,10 +191,10 @@ peeking_next_by_clone! { ['a] ::std::str::Bytes<'a> }
 peeking_next_by_clone! { ['a, T] ::std::option::Iter<'a, T> }
 peeking_next_by_clone! { ['a, T] ::std::result::Iter<'a, T> }
 peeking_next_by_clone! { [T] ::std::iter::Empty<T> }
-#[cfg(feature = "use_alloc")]
-peeking_next_by_clone! { ['a, T] alloc::collections::linked_list::Iter<'a, T> }
-#[cfg(feature = "use_alloc")]
-peeking_next_by_clone! { ['a, T] alloc::collections::vec_deque::Iter<'a, T> }
+
+peeking_next_by_clone! { ['a, T] std::collections::linked_list::Iter<'a, T> }
+
+peeking_next_by_clone! { ['a, T] std::collections::vec_deque::Iter<'a, T> }
 
 // cloning a Rev has no extra overhead; peekable and put backs are never DEI.
 peeking_next_by_clone! { [I: Clone + PeekingNext + DoubleEndedIterator]

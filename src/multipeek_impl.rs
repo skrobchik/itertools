@@ -1,8 +1,6 @@
 use crate::size_hint;
-#[cfg(doc)]
-use crate::Itertools;
 use crate::PeekingNext;
-use alloc::collections::VecDeque;
+use std::collections::VecDeque;
 use std::iter::Fuse;
 
 /// See [`multipeek()`] for more information.
