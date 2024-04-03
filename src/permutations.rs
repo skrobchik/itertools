@@ -1,8 +1,8 @@
 use std::boxed::Box;
-use std::vec::Vec;
 use std::fmt;
 use std::iter::once;
 use std::iter::FusedIterator;
+use std::vec::Vec;
 
 use super::lazy_buffer::LazyBuffer;
 use crate::size_hint::{self, SizeHint};

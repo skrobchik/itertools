@@ -99,7 +99,9 @@ macro_rules! try_left {
     ($expr:expr) => {
         match $expr {
             $crate::either::Left(val) => val,
-            $crate::either::Right(err) => return $crate::either::Right(::core::convert::From::from(err)),
+            $crate::either::Right(err) => {
+                return $crate::either::Right(::core::convert::From::from(err))
+            }
         }
     };
 }
@@ -109,7 +111,9 @@ macro_rules! try_left {
 macro_rules! try_right {
     ($expr:expr) => {
         match $expr {
-            $crate::either::Left(err) => return $crate::either::Left(::core::convert::From::from(err)),
+            $crate::either::Left(err) => {
+                return $crate::either::Left(::core::convert::From::from(err))
+            }
             $crate::either::Right(val) => val,
         }
     };
@@ -1112,7 +1116,6 @@ where
     }
 }
 
-
 /// `Either<L, R>` implements `Read` if both `L` and `R` do.
 ///
 /// Requires crate feature `"use_std"`
@@ -1138,7 +1141,6 @@ where
     }
 }
 
-
 /// `Either<L, R>` implements `Seek` if both `L` and `R` do.
 ///
 /// Requires crate feature `"use_std"`
@@ -1151,7 +1153,6 @@ where
         for_both!(*self, ref mut inner => inner.seek(pos))
     }
 }
-
 
 /// Requires crate feature `"use_std"`
 impl<L, R> BufRead for Either<L, R>
@@ -1175,7 +1176,6 @@ where
         for_both!(*self, ref mut inner => inner.read_line(buf))
     }
 }
-
 
 /// `Either<L, R>` implements `Write` if both `L` and `R` do.
 ///
@@ -1302,7 +1302,6 @@ where
         for_both!(*self, ref mut inner => &mut *inner)
     }
 }
-
 
 /// `Either` implements `Error` if *both* `L` and `R` implement it.
 ///

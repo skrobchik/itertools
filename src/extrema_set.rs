@@ -1,5 +1,5 @@
-use std::{vec, vec::Vec};
 use std::cmp::Ordering;
+use std::{vec, vec::Vec};
 
 /// Implementation guts for `min_set`, `min_set_by`, and `min_set_by_key`.
 pub fn min_set_impl<I, K, F, Compare>(

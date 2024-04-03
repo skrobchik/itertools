@@ -71,7 +71,6 @@ where
     }
 }
 
-
 impl<I> PeekingNext for PutBackN<I>
 where
     I: Iterator,

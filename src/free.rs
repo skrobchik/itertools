@@ -3,12 +3,10 @@
 //! The benefit of free functions is that they accept any [`IntoIterator`] as
 //! argument, so the resulting code may be easier to read.
 
-
 use std::fmt::Display;
 use std::iter::{self, Zip};
 
 type VecIntoIter<T> = std::vec::IntoIter<T>;
-
 
 use std::string::String;
 

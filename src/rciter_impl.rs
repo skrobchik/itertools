@@ -1,6 +1,6 @@
-use std::rc::Rc;
 use std::cell::RefCell;
 use std::iter::{FusedIterator, IntoIterator};
+use std::rc::Rc;
 
 /// A wrapper for `Rc<RefCell<I>>`, that implements the `Iterator` trait.
 #[derive(Debug)]

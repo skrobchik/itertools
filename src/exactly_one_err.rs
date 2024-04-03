@@ -1,4 +1,3 @@
-
 use std::error::Error;
 use std::fmt::{Debug, Display, Formatter, Result as FmtResult};
 
@@ -115,7 +114,6 @@ where
         dbg.field("inner", &self.inner).finish()
     }
 }
-
 
 impl<I> Error for ExactlyOneError<I>
 where
