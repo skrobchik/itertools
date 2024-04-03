@@ -143,7 +143,7 @@ impl<L: Clone, R: Clone> Clone for Either<L, R> {
         match (self, source) {
             (Left(dest), Left(source)) => dest.clone_from(source),
             (Right(dest), Right(source)) => dest.clone_from(source),
-            (dest, source) => *dest = source.clone(),
+            (dest, source) => dest.clone_from(source),
         }
     }
 }
@@ -1371,7 +1371,7 @@ fn deref() {
 
     fn is_str(_: &str) {}
     let value: Either<String, &str> = Left(String::from("test"));
-    is_str(&*value);
+    is_str(&value);
 }
 
 #[test]
