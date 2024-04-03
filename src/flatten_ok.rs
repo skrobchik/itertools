@@ -1,8 +1,5 @@
 use crate::size_hint;
-use std::{
-    fmt,
-    iter::{DoubleEndedIterator, FusedIterator},
-};
+use std::{fmt, iter::FusedIterator};
 
 pub fn flatten_ok<I, T, E>(iter: I) -> FlattenOk<I, T, E>
 where

@@ -53,9 +53,8 @@ use std::collections::HashSet;
 use std::fmt;
 use std::fmt::Write;
 use std::hash::Hash;
-use std::iter::{once, IntoIterator};
+use std::iter::once;
 type VecIntoIter<T> = std::vec::IntoIter<T>;
-use std::iter::FromIterator;
 
 #[macro_use]
 mod impl_macros;

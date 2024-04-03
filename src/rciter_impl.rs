@@ -1,5 +1,5 @@
 use std::cell::RefCell;
-use std::iter::{FusedIterator, IntoIterator};
+use std::iter::FusedIterator;
 use std::rc::Rc;
 
 /// A wrapper for `Rc<RefCell<I>>`, that implements the `Iterator` trait.

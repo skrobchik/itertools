@@ -4,7 +4,6 @@ use crate::Itertools;
 use std::fmt;
 use std::iter::FusedIterator;
 use std::mem::replace;
-use std::vec::Vec;
 
 /// Head element and Tail iterator pair
 ///

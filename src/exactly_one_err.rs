@@ -1,8 +1,6 @@
 use std::error::Error;
 use std::fmt::{Debug, Display, Formatter, Result as FmtResult};
 
-use std::iter::ExactSizeIterator;
-
 use crate::either::Either;
 
 use crate::size_hint;

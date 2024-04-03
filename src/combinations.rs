@@ -2,7 +2,6 @@ use std::fmt;
 use std::iter::FusedIterator;
 
 use super::lazy_buffer::LazyBuffer;
-use std::vec::Vec;
 
 use crate::adaptors::checked_binomial;
 

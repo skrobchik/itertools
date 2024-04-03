@@ -1,6 +1,5 @@
 use std::iter::Fuse;
 use std::ops::Index;
-use std::vec::Vec;
 
 use crate::size_hint::{self, SizeHint};
 

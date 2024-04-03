@@ -16,7 +16,7 @@ pub use self::multi_product::*;
 
 use crate::size_hint::{self, SizeHint};
 use std::fmt;
-use std::iter::{Enumerate, FromIterator, Fuse, FusedIterator};
+use std::iter::{Enumerate, Fuse, FusedIterator};
 use std::marker::PhantomData;
 
 /// An iterator adaptor that alternates elements from two iterators until both

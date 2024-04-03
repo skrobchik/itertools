@@ -1,8 +1,6 @@
 use crate::size_hint;
 use crate::Itertools;
 
-use std::vec::Vec;
-
 #[derive(Clone)]
 /// An iterator adaptor that iterates over the cartesian product of
 /// multiple iterators of type `I`.

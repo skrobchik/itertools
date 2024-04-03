@@ -1,5 +1,5 @@
 use std::cell::{Cell, RefCell};
-use std::vec::{self, Vec};
+use std::vec;
 
 /// A trait to unify `FnMut` for `GroupBy` with the chunk key in `IntoChunks`
 trait KeyFunction<A> {

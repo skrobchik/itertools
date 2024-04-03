@@ -1,4 +1,3 @@
-use std::iter::FromIterator;
 use std::marker::PhantomData;
 
 #[derive(Clone, Debug)]

@@ -12,7 +12,6 @@
 //! Disabled by default. Enable to `#[derive(Serialize, Deserialize)]` for `Either`
 //!
 
-use core::convert::{AsMut, AsRef};
 use core::fmt;
 use core::future::Future;
 use core::ops::Deref;

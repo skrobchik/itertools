@@ -1,6 +1,5 @@
 use std::collections::HashMap;
 use std::hash::Hash;
-use std::iter::Iterator;
 
 /// Return a `HashMap` of keys mapped to a list of their corresponding values.
 ///

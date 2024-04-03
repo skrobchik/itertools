@@ -8,8 +8,6 @@ use std::iter::{self, Zip};
 
 type VecIntoIter<T> = std::vec::IntoIter<T>;
 
-use std::string::String;
-
 use crate::intersperse::{Intersperse, IntersperseWith};
 use crate::Itertools;
 

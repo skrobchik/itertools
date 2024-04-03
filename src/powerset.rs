@@ -1,7 +1,6 @@
 use std::fmt;
 use std::iter::FusedIterator;
 use std::usize;
-use std::vec::Vec;
 
 use super::combinations::{combinations, Combinations};
 use crate::adaptors::checked_binomial;
